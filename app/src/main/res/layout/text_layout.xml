@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="left"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/leftTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:background="#16000000"
+            android:text="recievedaaaaaaaaaaaaaaaaaa nksdnf isidfn        sidnfisn sdn snfsnfsarn asodddddddfs nsn spfnsf"
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="right"
+        android:gravity="right"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/rightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+
+            android:layout_marginLeft="100dp"
+            android:background="#6300BCD4"
+
+            android:gravity="right"
+            android:text="recie layout_constraintTop_toTopOf vdsjsdo osdjosdigsdgsdhhfd fhgfhfhfg fgfg fhdf" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

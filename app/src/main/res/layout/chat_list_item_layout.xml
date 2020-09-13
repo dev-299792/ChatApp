@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:cardBackgroundColor="#F8F1C8"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="false">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="20dp">
+
+    <TextView
+        android:id="@+id/chatListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="#3b1aea"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="false">
+    <TextView
+        android:id="@+id/chatListUnread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="10"
+        android:textColor="#FFFFFF"
+        android:background="#3b1aea"
+         />
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
+
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:orientation="horizontal" android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content">-->
+<!--    -->
+<!--    <TextView-->
+<!--        android:id="@+id/chatListnames"-->
+<!--        android:text="dev"-->
+<!--        -->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--    />-->
+<!--    -->
+<!--    <TextView-->
+<!--        android:id="@+id/chatListunread"-->
+<!--        android:text="10"-->
+<!--        android:layout_gravity="right"-->
+<!--        android:gravity="right"-->
+<!--        android:background="#A9EFF8"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"/>-->
+<!--    -->
+<!--</LinearLayout>-->
