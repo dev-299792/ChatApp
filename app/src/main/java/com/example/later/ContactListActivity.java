@@ -1,8 +1,15 @@
 package com.example.later;
 
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,8 +28,19 @@ public class ContactListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
 
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_CONTACTS) ==
+                PackageManager.PERMISSION_GRANTED) {
+            list = new ContactList(this).getNumbers();
+        } else {
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+            new ActivityResultContracts.RequestPermission();
+
+        }
+
         listView = findViewById(R.id.contactlistview);
-        list = new ContactList(this).getNumbers();
+
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
         listView.setAdapter(adapter);
 

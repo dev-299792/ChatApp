@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String db_name = "userchats";
@@ -11,6 +13,15 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabaseHelper(Context context) {
         super(context,db_name,null,db_version);
+    }
+
+    public static void addMessage(SQLiteDatabase db,MyMessage msg) {
+
+    }
+
+    public static ArrayList<MyMessage> getMessages(SQLiteDatabase database,String uid) {
+        ArrayList<MyMessage> list = new ArrayList<>();
+        return  list;
     }
 
     @Override

@@ -19,17 +19,54 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ChatArrayAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private String myuid,otheruid;
+    EditText editText;
+    SQLiteDatabase database;
+    ArrayList<MyMessage> myMessageList;
+    ObjectOutputStream outputStream;
 
     void addMessage(MyMessage msg) {
+        myMessageList.add(msg);
+        mAdapter.notifyDataSetChanged();
+        SQLiteDatabaseHelper.addMessage(database,msg);
+    }
 
+    void sendMessage() {
+        String msg = editText.getText().toString();
+        if(msg.equals("")) {
+            return;
+        }
+        MyMessage m = new MyMessage();
+        m.msg = msg;
+        m.type = MyMessage.Type.CHAT;
+        m.from = myuid;
+        m.to = otheruid;
+        m.sender = true;
+        addMessage(m);
+
+        sendToServer(m);
+    }
+
+    void sendToServer(final MyMessage msg) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    outputStream.writeObject(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -50,7 +87,11 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        SQLiteDatabaseHelper helper = new SQLiteDatabaseHelper(this);
+        database = helper.getWritableDatabase();
+
         try {
+            outputStream = ChatGlobal.objectOutputStream;
             otheruid = intent.getStringExtra("uid");
             if(FirebaseAuth.getInstance().getCurrentUser()!=null)
                 myuid = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
@@ -60,22 +101,19 @@ public class ChatActivity extends AppCompatActivity {
             recyclerView = findViewById(R.id.myRecyclerView);
             layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
-            SQLiteDatabaseHelper databaseHelper = new SQLiteDatabaseHelper(ChatActivity.this);
-            final SQLiteDatabase SQLdatabase = databaseHelper.getWritableDatabase();
 
-            final ArrayList<MyMessage> myMessageList = new ArrayList<MyMessage>();
-
+            myMessageList = SQLiteDatabaseHelper.getMessages(database,otheruid);
 
             mAdapter = new ChatArrayAdapter(R.layout.text_layout, myMessageList);
             recyclerView.setAdapter(mAdapter);
 
-            final EditText editText = findViewById(R.id.writeMsgEditText);
+            editText = findViewById(R.id.writeMsgEditText);
             Button button = findViewById(R.id.send);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    sendMessage();
                 }
             });
 

@@ -11,7 +11,7 @@ public class MyMessage implements Serializable {
     {
         return sender;
     }
-    enum Type {
+    public enum Type {
         CHAT,
         RECIEVED_SERVER,
         RECIEVED_USER,
