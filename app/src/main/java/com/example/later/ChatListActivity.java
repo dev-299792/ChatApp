@@ -48,6 +48,8 @@ public class ChatListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
 
+
+
         Intent intent = new Intent(this,ChatClientService.class);
         startService(intent);
 

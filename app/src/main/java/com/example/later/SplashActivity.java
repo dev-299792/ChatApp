@@ -13,9 +13,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import static com.example.later.ChatGlobal.objectInputStream;
 import static com.example.later.ChatGlobal.objectOutputStream;
 import static com.example.later.ChatGlobal.socket;
 
@@ -25,6 +27,7 @@ public class SplashActivity extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 3000;
     private FirebaseUser currentUser;
     Socket s;
+    ObjectInputStream stream;
 
     void log(String s) {
         Log.d(TAG, "log: "+s);
@@ -43,7 +46,8 @@ public class SplashActivity extends AppCompatActivity {
 
         currentUser =  FirebaseAuth.getInstance().getCurrentUser();
 
-        new Handler().postDelayed(new Runnable(){
+
+            new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
 
@@ -78,8 +82,11 @@ public class SplashActivity extends AppCompatActivity {
                 public void run() {
                     try {
                         s = new Socket("13.233.198.83",1234);
+                        if(currentUser != null && currentUser.getPhoneNumber() != null && !currentUser.getPhoneNumber().equals("")) {
+                            objectInputStream = new ObjectInputStream(s.getInputStream());
+                        }
 
-                        Log.d(TAG,"run: "+ s +" "+(s == null) );
+                            Log.d(TAG,"run: "+ s +" "+(s == null) );
                         log("run: "+ s +" "+(s == null));
                     } catch (IOException e) {
                         e.printStackTrace();
