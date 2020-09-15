@@ -20,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
@@ -32,7 +34,11 @@ public class ChatActivity extends AppCompatActivity {
     EditText editText;
     SQLiteDatabase database;
     ArrayList<MyMessage> myMessageList;
-    ObjectOutputStream outputStream;
+
+    //sOCKET RELATED
+    Socket socket=null;
+    ObjectOutputStream outputStream=null;
+    ObjectInputStream inputStream=null;
 
     void addMessage(MyMessage msg) {
         myMessageList.add(msg);
@@ -69,21 +75,77 @@ public class ChatActivity extends AppCompatActivity {
         }).start();
     }
 
+    void startThreads() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        final MyMessage msg = (MyMessage) inputStream.readObject();
+                        msg.sender = false;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),msg.msg,Toast.LENGTH_SHORT).show();
+                                addMessage(msg);
+                            }
+                        });
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        socket = new Socket("13.126.130.234",1234);
+                        outputStream = new ObjectOutputStream(socket.getOutputStream());
+                        MyMessage uidMsg = new MyMessage(myuid,myuid,"", MyMessage.Type.UID);
+                        outputStream.writeObject(uidMsg);
+                        inputStream = new ObjectInputStream(socket.getInputStream());
+                        startThreads();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MyMessage uidMsg = new MyMessage(myuid,myuid,"", MyMessage.Type.UID);
+                    outputStream.writeObject(uidMsg);
+                    socket.close();
+                    outputStream.close();
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-        LocalBroadcastManager manager=LocalBroadcastManager.getInstance(this);
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                MyMessage msg = (MyMessage) intent.getSerializableExtra("Message");
-                addMessage(msg);
-            }
-        };
-
-        manager.registerReceiver(receiver,new IntentFilter("CHAT_MSG_FILTER"));
 
         Intent intent = getIntent();
 
@@ -91,10 +153,15 @@ public class ChatActivity extends AppCompatActivity {
         database = helper.getWritableDatabase();
 
         try {
-            outputStream = ChatGlobal.objectOutputStream;
+
             otheruid = intent.getStringExtra("uid");
-            if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+            if(otheruid!=null && otheruid.length()<=11)
+                otheruid = "+91"+otheruid;
+            if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
                 myuid = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+                if(myuid!=null && myuid.length()<=11)
+                    myuid = "+91"+myuid;
+            }
             String othername = intent.getStringExtra("name");
             setTitle(othername);
             Toast.makeText(this, otheruid, Toast.LENGTH_SHORT).show();

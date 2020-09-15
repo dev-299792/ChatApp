@@ -48,10 +48,7 @@ public class ChatListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
 
-
-
-        Intent intent = new Intent(this,ChatClientService.class);
-        startService(intent);
+        startActivity(new Intent(this,TempActivity.class));
 
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +62,6 @@ public class ChatListActivity extends AppCompatActivity {
         uid = new ArrayList<>();
         unread = new ArrayList<>();
 
-        //String myphoneno = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
 
         onClickListener = new View.OnClickListener() {
             @Override

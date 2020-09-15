@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId=null;
     private PhoneAuthProvider.ForceResendingToken mResendToken=null;
-    ChatClientService client;
+
 
     void verifyUser() {
         String code = otpEditText.getText().toString();
