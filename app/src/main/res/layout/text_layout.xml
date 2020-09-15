@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,11 +19,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="100dp"
+            android:visibility="gone"
             android:textSize="20sp"
             android:padding="10dp"
             android:background="#16000000"
             android:text="recievedaaaaaaaaaaaaaaaaaa nksdnf isidfn        sidnfisn sdn snfsnfsarn asodddddddfs nsn spfnsf"
              />
+
+        <ImageView
+            android:id="@+id/leftImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_marginRight="100dp"
+            android:visibility="gone"
+            />
 
     </LinearLayout>
 
@@ -41,14 +49,21 @@
             android:id="@+id/rightTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:padding="10dp"
             android:textSize="20sp"
-
             android:layout_marginLeft="100dp"
             android:background="#6300BCD4"
-
             android:gravity="right"
             android:text="recie layout_constraintTop_toTopOf vdsjsdo osdjosdigsdgsdhhfd fhgfhfhfg fgfg fhdf" />
+        <ImageView
+            android:id="@+id/rightImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:layout_marginLeft="100dp"
+            android:gravity="right" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

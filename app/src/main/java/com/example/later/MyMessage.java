@@ -1,5 +1,7 @@
 package com.example.later;
 
+//import android.net.Uri;
+
 import java.io.Serializable;
 
 public class MyMessage implements Serializable {
@@ -7,6 +9,7 @@ public class MyMessage implements Serializable {
     public int id=0;
     boolean sender=false;
     public String msg="";
+//    public Uri imageUri;
 
     public MyMessage() {
 
@@ -28,7 +31,8 @@ public class MyMessage implements Serializable {
         RECIEVED_SERVER,
         RECIEVED_USER,
         UID,
-        EXIT
+        EXIT,
+        IMAGE
     }
 
     public String from,to,other;

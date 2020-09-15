@@ -32,7 +32,13 @@
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="send" />
+            android:text="\>" />
+
+        <Button
+            android:id="@+id/imgButton"
+            android:text="img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
